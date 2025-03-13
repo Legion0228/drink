@@ -1,288 +1,301 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>乐老师请多喝水 </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚰</title>
+    
+    <!-- CDN 引入 -->
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<!-- CDN 引入 -->
-<script src="https://cdn.tailwindcss.com/3.4.1"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes dogBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
 
-<style>
-@keyframes dogBounce {
-0%, 100% { transform: translateY(0) rotate(0deg); }
-50% { transform: translateY(-15px) rotate(10deg); }
-}
+        .water-wave {
+            background: linear-gradient(45deg, #f59e0b 0%, #f97316 100%);
+            box-shadow: 0 2px 8px -1px rgba(245, 158, 11, 0.3);
+        }
 
-@keyframes successPop {
-0% { transform: scale(0); opacity: 0; }
-80% { transform: scale(1.1); opacity: 1; }
-100% { transform: scale(1); }
-}
+        .action-btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0.75rem;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1.5rem;
+            border: 2px solid rgba(245, 158, 11, 0.1);
+        }
 
-.progress-dog {
-transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-animation: dogBounce 0.8s infinite;
-}
+        .amount-text {
+            font-size: 0.75rem;
+            line-height: 1rem;
+            margin-top: 0.25rem;
+            color: rgba(107, 114, 128, 0.9);
+        }
 
-.success-modal {
-animation: successPop 0.5s ease-out;
-}
-
-.water-wave {
-background: linear-gradient(45deg, #60a5fa 0%, #8b5cf6 100%);
-box-shadow: 0 2px 8px -1px rgba(96, 165, 250, 0.3);
-}
-</style>
+        @media (prefers-color-scheme: dark) {
+            .amount-text {
+                opacity: 0.8;
+            }
+        }
+    </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors duration-300">
-<main class="container mx-auto px-4 py-8 max-w-3xl">
-<!-- 头部 -->
-<header class="mb-12">
-<div class="flex justify-between items-center mb-8">
-<h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100">
-<i class="fas fa-bone mr-2 text-orange-400"></i>乐老师请多喝水
-</h1>
-<button id="themeToggle" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-<i class="fas fa-sun text-gray-600 dark:text-gray-300"></i>
-</button>
-</div>
-</header>
+    <main class="container mx-auto px-4 py-8 max-w-3xl">
+        <!-- 头部 -->
+        <header class="mb-12">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100">
+                    <i class="fas fa-paw mr-2 text-orange-400"></i>乐老师请多喝水！
+                </h1>
+                <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-sun text-gray-600 dark:text-gray-300"></i>
+                </button>
+            </div>
+        </header>
 
-<!-- 主卡片 -->
-<div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100 dark:border-gray-700">
-<!-- 进度条 -->
-<div class="mb-8 relative">
-<div class="w-full bg-gray-200 dark:bg-gray-700 h-4 rounded-full mb-4">
-<div id="progressBar" class="h-full water-wave rounded-full transition-all duration-500"></div>
-<i class="fas fa-dog text-2xl text-orange-400 progress-dog absolute -top-3"
-id="walkingDog"
-style="left: 0%"></i>
-</div>
-<div class="flex justify-between text-gray-600 dark:text-gray-300 text-sm mb-2">
-<span>今日目标：<span id="targetAmount">2000</span>ml</span>
-<span>已喝：<span id="currentAmount">0</span>ml</span>
-</div>
-<button id="resetBtn" class="absolute left-0 -top-1 text-gray-400 hover:text-orange-400 transition-colors">
-<i class="fas fa-redo-alt text-lg"></i>
-</button>
-</div>
+        <!-- 主卡片 -->
+        <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100 dark:border-gray-700">
+            <!-- 进度条 -->
+            <div class="mb-8 relative">
+                <div class="w-full bg-gray-200 dark:bg-gray-700 h-4 rounded-full mb-4 overflow-hidden">
+                    <div id="progressBar" class="h-full water-wave rounded-full transition-all duration-500 w-0"></div>
+                    <i class="fas fa-dog text-2xl text-orange-400 absolute -top-3" 
+                       id="walkingDog"
+                       style="left: 0%"></i>
+                </div>
+                <div class="flex justify-between text-gray-600 dark:text-gray-300 text-sm mb-2">
+                    <span>今日目标：<span id="targetAmount">2000</span>ml</span>
+                    <span>已喝：<span id="currentAmount">0</span>ml</span>
+                </div>
+                <button id="resetBtn" class="absolute left-0 -top-1 text-gray-400 hover:text-orange-400 transition-colors">
+                    <i class="fas fa-redo-alt text-lg"></i>
+                </button>
+            </div>
 
-<!-- 操作按钮 -->
-<div class="grid grid-cols-2 gap-4 mb-8">
-<button class="action-btn" data-ml="100">
-<i class="fas fa-tint mr-2"></i>100ml
-</button>
-<button class="action-btn" data-ml="200">
-<i class="fas fa-tint mr-2"></i>200ml
-</button>
-<button class="action-btn" data-ml="300">
-<i class="fas fa-tint mr-2"></i>300ml
-</button>
-<button class="action-btn" data-ml="custom">
-<i class="fas fa-pen mr-2"></i>自定义
-</button>
-</div>
+            <!-- 喝水按钮 -->
+            <div class="grid grid-cols-2 gap-3 mb-8">
+                <button class="action-btn bg-amber-100 hover:bg-amber-200 dark:bg-amber-800/30" data-ml="100">
+                    <i class="fas fa-bone text-amber-500 text-lg"></i>
+                    <span class="amount-text font-medium">100ml</span>
+                </button>
+                <button class="action-btn bg-orange-100 hover:bg-orange-200 dark:bg-orange-800/30" data-ml="200">
+                    <i class="fas fa-paw text-orange-500 text-lg"></i>
+                    <span class="amount-text font-medium">200ml</span>
+                </button>
+                <button class="action-btn bg-red-100 hover:bg-red-200 dark:bg-red-800/30" data-ml="300">
+                    <i class="fas fa-fire text-red-500 text-lg"></i>
+                    <span class="amount-text font-medium">300ml</span>
+                </button>
+                <button class="action-btn bg-sky-100 hover:bg-sky-200 dark:bg-sky-800/30" data-ml="custom">
+                    <i class="fas fa-edit text-sky-500 text-lg"></i>
+                    <span class="amount-text font-medium">自定义</span>
+                </button>
+            </div>
 
-<!-- 提醒设置 -->
-<div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-xl">
-<div class="flex items-center justify-between mb-4">
-<span class="text-gray-600 dark:text-gray-300">
-<i class="fas fa-bell mr-2"></i>提醒间隔
-</span>
-<div class="flex items-center space-x-2">
-<input type="range" id="reminderInterval" min="30" max="120" value="60"
-class="w-32 accent-blue-400">
-<span id="intervalValue" class="text-gray-600 dark:text-gray-300">60分钟</span>
-</div>
-</div>
-<button id="toggleReminder" class="w-full py-2 bg-blue-400 hover:bg-blue-500 text-white rounded-lg transition-colors">
-启动智能提醒
-</button>
-</div>
-</div>
+            <!-- 饮水记录 -->
+            <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-2xl">
+                <h3 class="text-lg font-semibold mb-4 text-gray-600 dark:text-gray-300">
+                    <i class="fas fa-clock-rotate-left mr-2"></i>今日饮水记录
+                </h3>
+                <div id="drinkRecords" class="space-y-2 max-h-48 overflow-y-auto">
+                    <!-- 记录动态生成 -->
+                </div>
+            </div>
+        </div>
 
-<!-- 成功弹窗 -->
-<div id="successModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4">
-<div class="success-modal bg-white dark:bg-gray-800 rounded-xl p-8 max-w-xs w-full text-center">
-<i class="fas fa-check-circle text-6xl text-green-400 mb-4"></i>
-<h2 class="text-2xl font-bold mb-2 dark:text-white">太棒啦！乐老师！</h2>
-<p class="text-gray-600 dark:text-gray-300 mb-4">今日喝水任务已达标</p >
-<i class="fas fa-dog text-4xl text-orange-400 mb-4"></i>
-<button onclick="document.getElementById('successModal').classList.add('hidden')"
-class="px-6 py-2 bg-green-400 hover:bg-green-500 text-white rounded-lg transition-colors">
-好的
-</button>
-</div>
-</div>
+        <!-- 成功弹窗 -->
+        <div id="successModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-xs w-full text-center">
+                <i class="fas fa-check-circle text-6xl text-green-400 mb-4"></i>
+                <h2 class="text-2xl font-bold mb-2 dark:text-white">任务完成！</h2>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">汪汪为你骄傲！</p>
+                <i class="fas fa-dog text-4xl text-orange-400 mb-4"></i>
+                <button onclick="document.getElementById('successModal').classList.add('hidden')" 
+                        class="px-6 py-2 bg-green-400 hover:bg-green-500 text-white rounded-xl transition-colors">
+                    继续努力
+                </button>
+            </div>
+        </div>
 
-<!-- 作者信息 -->
-<footer class="mt-8 text-center text-gray-500 dark:text-gray-400">
-设计制作：小吕 <i class="fas fa-paw ml-2 text-orange-400"></i>
-</footer>
-</main>
+        <!-- 作者信息 -->
+        <footer class="mt-8 text-center text-gray-500 dark:text-gray-400">
+           小吕出品 <i class="fas fa-rocket ml-2 text-orange-400"></i>
+        </footer>
+    </main>
 
 <script>
 class WaterTracker {
-constructor() {
-this.storageKey = 'waterData';
-this.defaultTarget = 2000;
-this.dogElement = document.getElementById('walkingDog');
-this.successModal = document.getElementById('successModal');
-this.data = this.loadData();
+    constructor() {
+        this.storageKey = 'waterData';
+        this.defaultTarget = 2000;
+        this.dogElement = document.getElementById('walkingDog');
+        this.successModal = document.getElementById('successModal');
+        this.records = [];
+        this.data = this.loadData();
+        
+        this.initElements();
+        this.initEventListeners();
+        this.updateProgress();
+        this.renderRecords();
+    }
 
-this.initElements();
-this.initEventListeners();
-this.updateProgress();
-this.initReminder();
+    initElements() {
+        this.progressBar = document.getElementById('progressBar');
+        this.currentAmountElem = document.getElementById('currentAmount');
+        this.actionBtns = document.querySelectorAll('.action-btn');
+        this.resetBtn = document.getElementById('resetBtn');
+        this.recordsContainer = document.getElementById('drinkRecords');
+    }
+
+    loadData() {
+        const savedData = localStorage.getItem(this.storageKey);
+        const defaultData = { 
+            current: 0, 
+            target: this.defaultTarget,
+            lastUpdated: new Date().toISOString().split('T')[0],
+            records: []
+        };
+        
+        try {
+            const data = savedData ? JSON.parse(savedData) : defaultData;
+            if (data.lastUpdated !== new Date().toISOString().split('T')[0]) {
+                return defaultData;
+            }
+            this.records = data.records || [];
+            return data;
+        } catch {
+            return defaultData;
+        }
+    }
+
+    saveData() {
+        this.data.lastUpdated = new Date().toISOString().split('T')[0];
+        this.data.records = this.records;
+        localStorage.setItem(this.storageKey, JSON.stringify(this.data));
+    }
+
+    addWater(amount) {
+        if (amount > 0) {
+            this.data.current = Math.min(this.data.current + amount, this.data.target);
+            this.records.unshift({
+                time: new Date().toLocaleTimeString('zh-CN', { hour12: false }),
+                amount: amount
+            });
+            this.saveData();
+            this.updateProgress();
+            this.renderRecords();
+            this.triggerDogAnimation();
+            if (this.data.current >= this.data.target) this.showSuccess();
+        }
+    }
+
+    deleteRecord(index) {
+        const removedAmount = this.records[index].amount;
+        this.data.current = Math.max(this.data.current - removedAmount, 0);
+        this.records.splice(index, 1);
+        this.saveData();
+        this.renderRecords();
+        this.updateProgress();
+    }
+
+    renderRecords() {
+        this.recordsContainer.innerHTML = this.records.map((record, index) => `
+            <div class="drink-record bg-white dark:bg-gray-600 p-3 rounded-xl flex justify-between items-center mb-2">
+                <div>
+                    <span class="text-gray-500 dark:text-gray-300 text-sm">${record.time}</span>
+                    <span class="ml-2 text-amber-500">+${record.amount}ml</span>
+                </div>
+                <button onclick="waterTracker.deleteRecord(${index})" class="text-red-300 hover:text-red-500 transition-colors">
+                    <i class="fas fa-trash-can"></i>
+                </button>
+            </div>
+        `).join('');
+    }
+
+    updateProgress() {
+        const percentage = Math.min((this.data.current / this.data.target) * 100, 100);
+        this.progressBar.style.width = `${percentage}%`;
+        this.currentAmountElem.textContent = this.data.current;
+        
+        const containerWidth = this.progressBar.parentElement.offsetWidth;
+        const dogPosition = (containerWidth * percentage / 100) - 14;
+        this.dogElement.style.left = `${dogPosition}px`;
+    }
+
+    triggerDogAnimation() {
+        this.dogElement.style.animation = 'dogBounce 0.8s';
+        setTimeout(() => this.dogElement.style.animation = '', 800);
+    }
+
+    showSuccess() {
+        this.successModal.classList.remove('hidden');
+        setTimeout(() => this.successModal.classList.add('hidden'), 3000);
+    }
+
+    resetProgress() {
+        this.data.current = 0;
+        this.records = [];
+        this.saveData();
+        this.updateProgress();
+        this.renderRecords();
+        this.dogElement.style.left = '0px';
+    }
+
+    initEventListeners() {
+        this.actionBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (btn.dataset.ml === 'custom') {
+                    const amount = prompt('请输入喝水量（ml）:');
+                    if (amount && !isNaN(amount)) this.addWater(parseInt(amount));
+                } else {
+                    this.addWater(parseInt(btn.dataset.ml));
+                }
+            });
+        });
+
+        this.resetBtn.addEventListener('click', () => {
+            if (confirm('确定要重置所有数据吗？')) this.resetProgress();
+        });
+    }
 }
 
-initElements() {
-this.progressBar = document.getElementById('progressBar');
-this.currentAmountElem = document.getElementById('currentAmount');
-this.actionBtns = document.querySelectorAll('.action-btn');
-this.customModal = document.getElementById('customModal');
-this.resetBtn = document.getElementById('resetBtn');
-}
-
-loadData() {
-const savedData = localStorage.getItem(this.storageKey);
-const defaultData = {
-current: 0,
-target: this.defaultTarget,
-lastUpdated: new Date().toISOString().split('T')[0]
-};
-
-const data = savedData ? JSON.parse(savedData) : defaultData;
-if (data.lastUpdated !== new Date().toISOString().split('T')[0]) {
-return { ...defaultData, lastUpdated: new Date().toISOString().split('T')[0] };
-}
-return data;
-}
-
-saveData() {
-this.data.lastUpdated = new Date().toISOString().split('T')[0];
-localStorage.setItem(this.storageKey, JSON.stringify(this.data));
-}
-
-addWater(amount) {
-if (amount > 0) {
-this.data.current = Math.min(this.data.current + amount, this.data.target);
-this.saveData();
-this.updateProgress();
-if (this.data.current >= this.data.target) {
-this.showSuccess();
-}
-}
-}
-
-updateProgress() {
-const percentage = Math.min((this.data.current / this.data.target) * 100, 100);
-this.progressBar.style.width = `${percentage}%`;
-this.currentAmountElem.textContent = this.data.current;
-
-// 更新小狗位置
-const containerWidth = this.progressBar.parentElement.offsetWidth;
-const dogPosition = (containerWidth * percentage / 100) - 14;
-this.dogElement.style.left = `${dogPosition}px`;
-}
-
-showSuccess() {
-this.successModal.classList.remove('hidden');
-setTimeout(() => {
-this.successModal.classList.add('hidden');
-}, 3000);
-}
-
-resetProgress() {
-this.data.current = 0;
-this.saveData();
-this.updateProgress();
-this.dogElement.style.left = '0px';
-this.successModal.classList.add('hidden');
-}
-
-initEventListeners() {
-this.actionBtns.forEach(btn => {
-btn.addEventListener('click', () => {
-if (btn.dataset.ml === 'custom') {
-const amount = prompt('请输入喝水量（ml）:');
-if (amount) this.addWater(parseInt(amount));
-} else {
-this.addWater(parseInt(btn.dataset.ml));
-}
+// 初始化
+let waterTracker;
+document.addEventListener('DOMContentLoaded', () => {
+    waterTracker = new WaterTracker();
+    if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
 });
-});
-
-this.resetBtn.addEventListener('click', () => {
-if (confirm('确定要重置当前进度吗？')) this.resetProgress();
-});
-}
-
-initReminder() {
-let reminderTimer = null;
-const reminderBtn = document.getElementById('toggleReminder');
-const intervalInput = document.getElementById('reminderInterval');
-
-intervalInput.addEventListener('input', () => {
-document.getElementById('intervalValue').textContent = `${intervalInput.value}分钟`;
-});
-
-reminderBtn.addEventListener('click', () => {
-if (reminderTimer) {
-clearInterval(reminderTimer);
-reminderTimer = null;
-reminderBtn.textContent = '启动智能提醒';
-} else {
-const interval = parseInt(intervalInput.value) * 60000;
-reminderTimer = setInterval(() => this.showReminder(), interval);
-reminderBtn.textContent = '停止提醒';
-this.showReminder();
-}
-});
-}
-
-showReminder() {
-if (Notification.permission === 'granted') {
-new Notification(' 喝水提醒', {
-body: `您今天已经喝了 ${this.data.current}ml 水，该补充水分啦！`,
-icon: 'https://img.icons8.com/color/48/dog-footprint.png'
-});
-}
-}
-}
 
 // 主题切换
 document.getElementById('themeToggle').addEventListener('click', () => {
-document.documentElement.classList.toggle('dark');
-localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-});
-
-// 初始化
-document.addEventListener('DOMContentLoaded', () => {
-new WaterTracker();
-if (Notification.permission !== 'denied') Notification.requestPermission();
-if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+    document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
 });
 </script>
 
 <style>
-.action-btn {
-@apply py-3 px-4 rounded-xl text-white font-medium
-bg-gradient-to-r from-blue-400 to-purple-400
-hover:from-blue-500 hover:to-purple-500
-transition-all duration-300 hover:scale-105
-active:scale-95 shadow-md hover:shadow-lg
-border border-blue-200 dark:border-blue-900;
+.drink-record {
+    box-shadow: 0 2px 8px -2px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
 }
 
-#walkingDog {
-filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+.drink-record:hover {
+    transform: translateX(4px);
 }
 
-.success-modal {
-box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+.action-btn:active {
+    transform: scale(1.08);
+}
+
+#progressBar {
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>
 </body>
